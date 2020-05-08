@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
 } from 'react-router-dom';
 
 import './App.scss';
@@ -11,25 +10,14 @@ import './App.scss';
 import ItemReception from './containers/ItemReception';
 import ItemIssue from './containers/ItemIssue';
 import ItemReturn from './containers/ItemReturn';
+import Sidebar from './components/Sidebar';
 
 
 const App = () => (
   <Router>
     <div id="app">
 
-      <nav className="sidebar">
-        <ul>
-          <li>
-            <Link to="/reception">Прием</Link>
-          </li>
-          <li>
-            <Link to="/issue">Выдача</Link>
-          </li>
-          <li>
-            <Link to="/return">Возврат</Link>
-          </li>
-        </ul>
-      </nav>
+      <Sidebar />
 
       <Switch>
         <div className="workspace">

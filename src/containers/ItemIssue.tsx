@@ -1,7 +1,11 @@
 import * as React from 'react';
 
 const ItemIssue = () => {
-  return <h2>Выдача товара</h2>;
+  return (
+    <div className="page">
+      <h2>Выдача товара</h2>
+    </div>
+  );
 };
 
 

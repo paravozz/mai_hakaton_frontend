@@ -34,12 +34,14 @@
 }
 
 .workspace {
-  padding: 15px;
-
   width: 100%;
   height: 100%;
 
   color: #340b54;
 
   overflow: auto;
+
+  .page {
+    padding: 15px;
+  }
 }

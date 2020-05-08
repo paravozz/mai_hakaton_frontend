@@ -1,7 +1,11 @@
 import * as React from 'react';
 
 const ItemReturn = () => {
-  return <h2>Возврат товара</h2>;
+  return (
+    <div className="page">
+      <h2>Возврат товара</h2>
+    </div>
+  );
 };
 
 
