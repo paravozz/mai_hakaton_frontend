@@ -145,6 +145,18 @@ class Api {
       return deliveryData;
     });
   }
+
+  static postReturn = (deliveryId: number, returnedItems: any) => {
+    return delay(1000).then(() => {
+      const delivery = Object.values(deliveries).find(d => d.id === deliveryId);
+
+      if (delivery) {
+        return { ...delivery, returnedItems };
+      }
+
+      return returnedItems;
+    });
+  }
 }
 
 

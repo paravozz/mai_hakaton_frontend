@@ -37,7 +37,7 @@ const Delivery: React.FunctionComponent<IDeliveryProps> = ({ delivery, onDeliver
 
       <div className="delivery-data">
         <div className="delivery-items-list">
-          <h3>Товары:<br /><small>Отметьте товары, которые забрал получатель</small></h3>
+          <h3>Товары:<br /><small>Отметьте обработанные товары</small></h3>
           {delivery.items.map(item => (
             <div className="delivery-item" key={item.id}>
               <span>
