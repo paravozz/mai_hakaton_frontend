@@ -42,13 +42,18 @@ const ItemIssue = () => {
     <div className="page">
       <h2>Выдача товара</h2>
 
-      <div className="item-issue-form">
-        <input
-          disabled={isFetching}
-          type="text"
-          value={userCode}
-          onChange={e => setUserCode(e.currentTarget.value)}
-        />
+      <div className="form item-issue-form" style={{ width: '300px' }}>
+        <div className="form-input">
+          <label htmlFor="usercode-input">Код получения:</label>
+          <input
+            id="usercode-input"
+            disabled={isFetching}
+            type="text"
+            value={userCode}
+            onChange={e => setUserCode(e.currentTarget.value)}
+          />
+        </div>
+
         <button
           disabled={isFetching}
           type="button"

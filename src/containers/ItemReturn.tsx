@@ -42,13 +42,17 @@ const ItemReturn = () => {
     <div className="page">
       <h2>Возврат товара</h2>
 
-      <div className="item-issue-form">
-        <input
-          disabled={isFetching}
-          type="text"
-          value={userCode}
-          onChange={e => setUserCode(e.currentTarget.value)}
-        />
+      <div className="form item-issue-form" style={{ width: '300px' }}>
+        <div className="form-input">
+          <label htmlFor="return-usercode-input">Код получения:</label>
+          <input
+            id="return-usercode-input"
+            disabled={isFetching}
+            type="text"
+            value={userCode}
+            onChange={e => setUserCode(e.currentTarget.value)}
+          />
+        </div>
         <button
           disabled={isFetching}
           type="button"

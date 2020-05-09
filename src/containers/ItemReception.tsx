@@ -35,7 +35,7 @@ const ItemReception = () => {
     <div className="page">
       <h2>Прием товара</h2>
 
-      <div className="item-reception-form">
+      <div className="form item-reception-form" style={{ width: '300px' }}>
         <div className="form-input">
           <label htmlFor="barcode-input">Штрихкод товара</label>
           <input

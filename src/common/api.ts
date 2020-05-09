@@ -132,7 +132,7 @@ class Api {
 
       return deliveries[userCode as '123' | '321'];
     });
-  }
+  };
 
   static updateDelivery = (deliveryId: number, deliveryData: any) => {
     return delay(1000).then(() => {
@@ -144,7 +144,7 @@ class Api {
 
       return deliveryData;
     });
-  }
+  };
 
   static postReturn = (deliveryId: number, returnedItems: any) => {
     return delay(1000).then(() => {
