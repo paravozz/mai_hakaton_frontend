@@ -18,7 +18,7 @@ const ItemReception = () => {
 
   const processItem = () => {
     setIsFetching(true);
-    Api.processItem({ barcode } as IItem, currentCell!.id)
+    Api.processItem(currentCell!.id, { barcode } as IItem)
       .then((item) => {
         setIsFetching(false);
         setIsSuccessfullyPlaced(true);
@@ -34,6 +34,7 @@ const ItemReception = () => {
   return (
     <div className="page">
       <h2>Прием товара</h2>
+
       <div className="item-reception-form">
         <input
           disabled={!!currentCell || isFetching}

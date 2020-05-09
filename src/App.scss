@@ -45,3 +45,29 @@
     padding: 15px;
   }
 }
+
+.delivery {
+  .delivery-data {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+      .delivery-items-list {
+        display: flex;
+        flex-flow: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        .delivery-item {
+
+        }
+      }
+
+      .delivery-client-info {
+        display: flex;
+        flex-flow: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
+  }
+}
