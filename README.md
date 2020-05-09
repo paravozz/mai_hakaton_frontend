@@ -4,4 +4,11 @@
 `npm i -D`
 
 ## Запуск
+
+### Dev
 `npm run start`
+
+### Prod
+- `npm run build`
+- `cd build`
+- `index.html`
