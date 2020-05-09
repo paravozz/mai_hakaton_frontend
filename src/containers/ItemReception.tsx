@@ -36,12 +36,16 @@ const ItemReception = () => {
       <h2>Прием товара</h2>
 
       <div className="item-reception-form">
-        <input
-          disabled={!!currentCell || isFetching}
-          type="text"
-          value={barcode}
-          onChange={e => setBarcode(e.currentTarget.value)}
-        />
+        <div className="form-input">
+          <label htmlFor="barcode-input">Штрихкод товара</label>
+          <input
+            id="barcode-input"
+            disabled={!!currentCell || isFetching}
+            type="text"
+            value={barcode}
+            onChange={e => setBarcode(e.currentTarget.value)}
+          />
+        </div>
         <button
           disabled={!!currentCell || isFetching}
           type="button"
