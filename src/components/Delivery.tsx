@@ -42,9 +42,11 @@ const Delivery: React.FunctionComponent<IDeliveryProps> = ({ delivery, onDeliver
         <div className="delivery-items-list">
           <h3>Товары:<br /><small>Отметьте обработанные товары</small></h3>
           {delivery.items.map(item => (
-            <div className="delivery-item" key={item.id}>
+            // eslint-disable-next-line
+            <div className={`delivery-item${!!(!item.cellId || item.returnId || item.deliveredDate) ? ' disabled' : ''}`} key={item.id}>
               <span>
                 <input
+                  disabled={!!(!item.cellId || item.returnId || item.deliveredDate)}
                   type="checkbox"
                   checked={selectedItems.includes(item.barcode)}
                   onChange={() => onItemSelect(item.barcode)}

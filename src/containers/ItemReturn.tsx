@@ -50,7 +50,7 @@ const ItemReturn = () => {
 
       <div className="form item-issue-form" style={{ width: '300px' }}>
         <div className="form-input">
-          <label htmlFor="return-usercode-input">Код получения:</label>
+          <label htmlFor="return-usercode-input">Баркод товара:</label>
           <input
             id="return-usercode-input"
             disabled={isFetching}
