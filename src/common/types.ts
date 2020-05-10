@@ -1,8 +1,9 @@
 export interface IItem {
   id: number;
-  deliveryId?: number;
-  barcode: string;
-  title?: string;
+  barcode: number;
+  deliveredDate: string | null;
+  returnId: number | null;
+  cellId: number | null;
 }
 
 export interface IClient {
@@ -14,19 +15,17 @@ export interface IClient {
 
 export interface ICell {
   id: number;
-  capacity: number;
+  // capacity: number;
 }
 
 export interface IDelivery {
   id: number;
+  userCode: number;
   items: IItem[];
-  deliveredItems: IItem[],
-  client: IClient;
-  cellIds: number[];
-  userCode: string;
+  client: IClient | null;
 }
 
 export interface IReturn {
   id: number;
-  items: IItem[];
+  itemId: number;
 }

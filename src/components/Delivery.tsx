@@ -10,26 +10,29 @@ interface IDeliveryProps {
 const Delivery: React.FunctionComponent<IDeliveryProps> = ({ delivery, onDeliveryReceived }) => {
   const [selectedItems, setSelectedItems] = React.useState<number[]>([]);
 
-  const onItemSelect = (itemId: number) => {
-    if (selectedItems.includes(itemId)) {
-      setSelectedItems(selectedItems.filter(i => i !== itemId));
+  const onItemSelect = (itemBarcode: number) => {
+    if (selectedItems.includes(itemBarcode)) {
+      setSelectedItems(selectedItems.filter(i => i !== itemBarcode));
     } else {
-      setSelectedItems([...selectedItems, itemId]);
+      setSelectedItems([...selectedItems, itemBarcode]);
     }
   };
+
+  const cellIds = Array.from(new Set(delivery.items.map(item => item.cellId))).filter(c => c !== null);
 
   return (
     <div className="delivery">
       <h2>
-        Доставка <b>№{delivery.id}</b> для <b>{delivery.client.FIO}</b>
+        Доставка <b>№{delivery.id}</b> {delivery.client ? <>для <b>{delivery.client.FIO}</b></> : ''}
         <br />
         <small>
           {
-            delivery.cellIds.length === 1
+            // eslint-disable-next-line
+            cellIds.length === 1
               ? (
-                `Ячейка: ${delivery.cellIds[0]}`
+                `Ячейка: ${cellIds[0]}`
               ) : (
-                `Ячейки: ${delivery.cellIds.join(' и ')}`
+                cellIds.length === 0 ? '' : `Ячейки: ${cellIds.join(' и ')}`
               )
           }
         </small>
@@ -43,22 +46,26 @@ const Delivery: React.FunctionComponent<IDeliveryProps> = ({ delivery, onDeliver
               <span>
                 <input
                   type="checkbox"
-                  checked={selectedItems.includes(item.id)}
-                  onChange={() => onItemSelect(item.id)}
+                  checked={selectedItems.includes(item.barcode)}
+                  onChange={() => onItemSelect(item.barcode)}
                 />
               </span>
               <span><b>Код: </b>{item.barcode}</span>
-              <span><b>Наименование: </b>{item.title}</span>
+              <span><b>Дата доставки: </b>{item.deliveredDate || '-'}</span>
+              <span><b>Ячейка: </b>{item.cellId || '-'}</span>
+              <span><b>ID Возврата: </b>{item.returnId || '-'}</span>
             </div>
           ))}
         </div>
 
-        <div className="delivery-client-info">
-          <h3>Получатель:</h3>
-          <span><b>ФИО: </b>{delivery.client.FIO}</span>
-          <span><b>Телефон: </b>{delivery.client.telNumber}</span>
-          {delivery.client.passport ? <span><b>Паспорт: </b>{delivery.client.passport}</span> : ''}
-        </div>
+        {delivery.client && (
+          <div className="delivery-client-info">
+            <h3>Получатель:</h3>
+            <span><b>ФИО: </b>{delivery.client.FIO}</span>
+            <span><b>Телефон: </b>{delivery.client.telNumber}</span>
+            {delivery.client.passport ? <span><b>Паспорт: </b>{delivery.client.passport}</span> : ''}
+          </div>
+        )}
       </div>
 
       <button type="button" onClick={() => onDeliveryReceived(selectedItems)}>

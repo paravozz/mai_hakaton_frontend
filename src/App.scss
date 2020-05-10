@@ -92,9 +92,14 @@ $text: #340b54;
         flex-flow: column;
         justify-content: flex-start;
         align-items: flex-start;
+        width: 100%;
 
         .delivery-item {
-
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          flex-flow: row nowrap;
+          width: 100%;
         }
       }
 
@@ -131,7 +136,7 @@ $text: #340b54;
     input {
       padding: 8px 15px;
 
-      border: 1px solid #340b54;
+      border: 1px solid lighten(#340b54, 10%);
       border-radius: 5px;
       outline: none;
 
@@ -139,6 +144,10 @@ $text: #340b54;
 
       &:focus {
         border-color: #340b54;
+      }
+
+      &:disabled {
+        border-color: #ececec;
       }
     }
   }
@@ -152,14 +161,24 @@ button {
   color: $white;
   font-weight: bold;
 
-
   border-radius: 5px;
   border: none;
   align-self: flex-end;
 
   cursor: pointer;
 
-  &:hover {
+  transition: all .2s;
+
+  &:not(:disabled):hover {
     filter: brightness(1.1);
   }
+
+  &:disabled {
+    background-color: #ececec;
+    color: #989898;
+  }
+}
+
+.error {
+  color: #d6322b;
 }

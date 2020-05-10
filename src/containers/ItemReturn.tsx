@@ -4,39 +4,45 @@ import Api from '../common/api';
 import Delivery from '../components/Delivery';
 
 const ItemReturn = () => {
-  const [userCode, setUserCode] = React.useState('');
-  const [currentDelivery, setCurrentDelivery] = React.useState<IDelivery | null>(null);
+  const [itemBarcode, setItemBarcode] = React.useState<number>(0);
 
   const [isFetching, setIsFetching] = React.useState(false);
 
   const [isSuccessfullyProcessed, setIsSuccessfullyProcessed] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
-  const getCurrentDelivery = () => {
+  const postReturn = () => {
     setIsFetching(true);
     setError(null);
 
-    Api.getDelivery(userCode)
-      .then(delivery => setCurrentDelivery(delivery))
-      .catch(err => setError(err.message))
-      .finally(() => { setIsFetching(false); });
-  };
-
-  const processCurrentDelivery = (itemIds: number[]) => {
-    setIsFetching(true);
-
-    Api.postReturn(currentDelivery!.id, itemIds)
-      .then((returnedDelivery) => {
-        setIsFetching(false);
+    Api.postReturn(itemBarcode)
+      .then(({ data: returned }) => {
         setIsSuccessfullyProcessed(true);
-        console.log('Возврат произведен', returnedDelivery);
+        console.log('Возврат произведен', returned);
         setTimeout(() => {
           setIsSuccessfullyProcessed(false);
-          setUserCode('');
-          setCurrentDelivery(null);
-        }, 3000);
-      });
+          setItemBarcode(0);
+        }, 2000);
+      })
+      .catch(({ response: { data: err } }) => setError(err.error))
+      .finally(() => { setIsFetching(false); });
   };
+  //
+  // const processCurrentDelivery = (itemId: number) => {
+  //   setIsFetching(true);
+  //
+  //   Api.postReturn(itemId)
+  //     .then(({ data: returned }) => {
+  //       setIsFetching(false);
+  //       setIsSuccessfullyProcessed(true);
+  //       console.log('Возврат произведен', returned);
+  //       setTimeout(() => {
+  //         setIsSuccessfullyProcessed(false);
+  //         setUserCode('');
+  //         setCurrentDelivery(null);
+  //       }, 3000);
+  //     });
+  // };
 
   return (
     <div className="page">
@@ -48,15 +54,15 @@ const ItemReturn = () => {
           <input
             id="return-usercode-input"
             disabled={isFetching}
-            type="text"
-            value={userCode}
-            onChange={e => setUserCode(e.currentTarget.value)}
+            type="number"
+            value={itemBarcode || ''}
+            onChange={e => setItemBarcode(parseInt(e.currentTarget.value, 10))}
           />
         </div>
         <button
           disabled={isFetching}
           type="button"
-          onClick={getCurrentDelivery}
+          onClick={postReturn}
         >
           Запросить
         </button>
@@ -67,17 +73,8 @@ const ItemReturn = () => {
       {isFetching ? 'Загрузка...' : ''}
 
       {
-        currentDelivery
-          ? (
-            <Delivery
-              delivery={currentDelivery}
-              onDeliveryReceived={processCurrentDelivery}
-            />
-          ) : ''
-      }
-      {
         isSuccessfullyProcessed
-          ? <h3>Отлично, спасибо!</h3>
+          ? <h3>Возврат оформлен, спасибо!</h3>
           : ''
       }
     </div>

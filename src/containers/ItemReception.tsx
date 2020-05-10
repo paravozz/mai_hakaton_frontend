@@ -1,31 +1,34 @@
 import * as React from 'react';
 import Api from '../common/api';
-import { ICell, IItem } from '../common/types';
+import { ICell } from '../common/types';
 
 const ItemReception = () => {
-  const [barcode, setBarcode] = React.useState('');
+  const [barcode, setBarcode] = React.useState<number>(0);
   const [currentCell, setCurrentCell] = React.useState<ICell | null>(null);
 
   const [isFetching, setIsFetching] = React.useState(false);
 
   const [isSuccessfullyPlaced, setIsSuccessfullyPlaced] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
 
   const getCurrentCell = () => {
     setIsFetching(true);
     Api.getAvailableCell(barcode)
-      .then((cell) => { setCurrentCell(cell); setIsFetching(false); });
+      .then(({ data: { cell } }) => { setCurrentCell({ id: cell }); setError(null); })
+      .catch(({ response: { data: err } }) => setError(err.error))
+      .finally(() => { setIsFetching(false); });
   };
 
   const processItem = () => {
     setIsFetching(true);
-    Api.processItem(currentCell!.id, { barcode } as IItem)
+    Api.processItem(currentCell!.id, barcode)
       .then((item) => {
         setIsFetching(false);
         setIsSuccessfullyPlaced(true);
         console.log(`Вещь ${item} размещена в ячейке ${currentCell!.id}`);
         setTimeout(() => {
           setIsSuccessfullyPlaced(false);
-          setBarcode('');
+          setBarcode(0);
           setCurrentCell(null);
         }, 3000);
       });
@@ -41,9 +44,9 @@ const ItemReception = () => {
           <input
             id="barcode-input"
             disabled={!!currentCell || isFetching}
-            type="text"
-            value={barcode}
-            onChange={e => setBarcode(e.currentTarget.value)}
+            type="number"
+            value={barcode || ''}
+            onChange={e => setBarcode(parseInt(e.currentTarget.value, 10))}
           />
         </div>
         <button
@@ -53,6 +56,8 @@ const ItemReception = () => {
         >
           Получить ячейку
         </button>
+
+        {error ? <span className="error">{error}</span> : ''}
 
         {
           currentCell

@@ -3,6 +3,7 @@ import { IDelivery } from '../common/types';
 import Api from '../common/api';
 import Delivery from '../components/Delivery';
 
+
 const ItemIssue = () => {
   const [userCode, setUserCode] = React.useState('');
   const [currentDelivery, setCurrentDelivery] = React.useState<IDelivery | null>(null);
@@ -17,16 +18,16 @@ const ItemIssue = () => {
     setError(null);
 
     Api.getDelivery(userCode)
-      .then(delivery => setCurrentDelivery(delivery))
-      .catch(err => setError(err.message))
+      .then(({ data: delivery }) => setCurrentDelivery(delivery))
+      .catch(({ response: { data: err } }) => setError(err.error))
       .finally(() => { setIsFetching(false); });
   };
 
   const processCurrentDelivery = (itemIds: number[]) => {
     setIsFetching(true);
 
-    Api.updateDelivery(currentDelivery!.id, { deliveredItems: itemIds })
-      .then((delivery) => {
+    Api.updateDelivery(currentDelivery!.id, itemIds)
+      .then(({ data: delivery }) => {
         setIsFetching(false);
         setIsSuccessfullyProcessed(true);
         console.log('Доставка оработана', delivery);
