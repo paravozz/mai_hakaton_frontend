@@ -12,7 +12,7 @@ class Api {
 
   public constructor() {
     this._axios = axios.create({
-      baseURL: 'http://127.0.0.1:5000',
+      baseURL: 'https://aviahack-mai-2020.herokuapp.com/',
     });
   }
 
